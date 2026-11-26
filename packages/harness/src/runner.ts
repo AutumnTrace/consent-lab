@@ -2,7 +2,7 @@ import { createRequire } from 'node:module';
 import { type Browser, type BrowserContext, type Page, type Request, chromium, firefox, webkit } from 'playwright';
 import { evaluate } from './evaluate.js';
 import { type Policy, classifyCookie, classifyRequest, classifyStorageKey, optionalCategories } from './policy.js';
-import { buildScenarios } from './scenarios.js';
+import { buildScenarios, scenarioIds } from './scenarios.js';
 import type {
   Action,
   BrowserName,
@@ -44,8 +44,34 @@ export const surfaces = [
 
 const launchers = { chromium, firefox, webkit };
 
+// Options arrive from the command line, from plain .mjs configs no type checker has seen, and
+// from callers of this API. Anything that would leave nothing to run, or no window to watch,
+// is refused here: an empty run has no failures, so it would otherwise report a pass.
+export function checkRunOptions(options: Pick<RunOptions, 'windowMs' | 'browsers' | 'scenarios'>): void {
+  const { windowMs, browsers, scenarios } = options;
+  if (!Number.isInteger(windowMs) || windowMs <= 0) {
+    throw new Error(`the observation window must be a whole number of milliseconds above 0, got ${String(windowMs)}`);
+  }
+  const names = Object.keys(launchers);
+  if (!Array.isArray(browsers) || browsers.length === 0) {
+    throw new Error(`no browser to run (use ${names.join(', ')})`);
+  }
+  const unknownBrowsers = browsers.filter((b) => !names.includes(b));
+  if (unknownBrowsers.length) {
+    throw new Error(`unknown browser(s): ${unknownBrowsers.join(', ')} (use ${names.join(', ')})`);
+  }
+  if (scenarios !== null) {
+    if (scenarios.length === 0) throw new Error('no scenario to run');
+    const unknownScenarios = scenarios.filter((s) => !scenarioIds.includes(s));
+    if (unknownScenarios.length) {
+      throw new Error(`unknown scenario(s): ${unknownScenarios.join(', ')} (use ${scenarioIds.join(', ')})`);
+    }
+  }
+}
+
 export async function runConsentLab(options: RunOptions): Promise<Report> {
   const startedAt = new Date();
+  checkRunOptions(options);
   const optional = optionalCategories(options.policy);
   if (!optional.includes(options.category)) {
     throw new Error(`category "${options.category}" is not an optional category in the policy (${optional.join(', ')})`);

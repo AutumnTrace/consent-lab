@@ -4,7 +4,7 @@ import { join, relative, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { loadConfig } from './config.js';
 import { renderHtml } from './report/html.js';
-import { runConsentLab } from './runner.js';
+import { checkRunOptions, runConsentLab } from './runner.js';
 import { scenarioIds } from './scenarios.js';
 import type { BrowserName, ScenarioId } from './types.js';
 
@@ -42,8 +42,6 @@ async function main(): Promise<number> {
 
   const browsers = values.browser?.split(',').map((b) => b.trim()) as BrowserName[] | undefined;
   const scenarios = values.scenario?.split(',').map((s) => s.trim()) as ScenarioId[] | undefined;
-  const unknown = scenarios?.filter((s) => !scenarioIds.includes(s));
-  if (unknown?.length) throw new Error(`unknown scenario(s): ${unknown.join(', ')}`);
 
   const options = await loadConfig(values.config, {
     ...(browsers ? { browsers } : {}),
@@ -52,6 +50,7 @@ async function main(): Promise<number> {
     ...(values.label ? { label: values.label } : {}),
     ...(values.policy ? { policy: values.policy } : {}),
   });
+  checkRunOptions(options);
   const out = resolve(values.out ?? 'consent-lab-report');
 
   console.log(

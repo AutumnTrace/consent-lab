@@ -3,7 +3,7 @@ export { evaluate } from './evaluate.js';
 export { classifyCookie, classifyRequest, classifyStorageKey, loadPolicy, optionalCategories, validatePolicy } from './policy.js';
 export type { CategoryPolicy, Classification, Policy } from './policy.js';
 export { renderHtml } from './report/html.js';
-export { runConsentLab } from './runner.js';
+export { checkRunOptions, runConsentLab } from './runner.js';
 export type { RunOptions } from './runner.js';
 export { buildScenarios, scenarioIds } from './scenarios.js';
 export type * from './types.js';

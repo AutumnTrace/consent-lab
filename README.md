@@ -179,7 +179,7 @@ export default defineConfig({
 
 ```sh
 consent-lab run --config consent-lab.config.ts --out consent-lab-report
-# exit 0: every run passed · 1: violations · 2: could not run (site down, adapter error, bad config)
+# exit 0: every run passed · 1: violations · 2: could not run (site down, adapter error, bad config or options)
 ```
 
 The shop's [adapter](fixtures/shop/consent-lab/adapter.ts) is about 30 lines and finds everything by accessible role and name. Its [policy](fixtures/shop/consent-lab/policy.json) is about 30 lines of JSON.

@@ -1,0 +1,32 @@
+{
+  "$schema": "../../../packages/harness/policy.schema.json",
+  "version": 1,
+  "unclassified": "report",
+  "categories": {
+    "necessary": {
+      "description": "Remembers the consent choice and the last visit. Requests to the shop's own origin are first-party and need no entry.",
+      "necessary": true,
+      "requests": [],
+      "cookies": ["consent"],
+      "storage": ["shop:*"]
+    },
+    "analytics": {
+      "description": "Pulse, the synthetic analytics script served by the local collector.",
+      "requests": [
+        { "origin": "http://127.0.0.1:4318", "path": "/pulse.js" },
+        { "origin": "http://127.0.0.1:4318", "path": "/collect/analytics" }
+      ],
+      "cookies": ["_pulse_id", "_pulse_session"],
+      "storage": ["pulse:*"]
+    },
+    "marketing": {
+      "description": "Beacon Ads, the synthetic ad tag served by the local collector.",
+      "requests": [
+        { "origin": "http://127.0.0.1:4318", "path": "/adtag.js" },
+        { "origin": "http://127.0.0.1:4318", "path": "/collect/ads" }
+      ],
+      "cookies": ["_adtag_uid"],
+      "storage": []
+    }
+  }
+}

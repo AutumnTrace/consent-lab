@@ -1,0 +1,27 @@
+{
+  "name": "consent-lab-repo",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@12.23.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "pnpm --filter @autumntrace/consent-lab build && pnpm --filter shop build",
+    "collector": "node fixtures/collector/server.mjs",
+    "shop": "pnpm --filter shop start",
+    "demo": "node scripts/demo.mjs",
+    "test": "pnpm --filter @autumntrace/consent-lab test",
+    "test:release": "vitest run --config tests/vitest.config.ts",
+    "reports": "node scripts/sample-reports.mjs",
+    "typecheck": "pnpm -r typecheck",
+    "media": "node scripts/media.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.4",
+    "typescript": "6.0.3",
+    "vitest": "5.1.2",
+    "playwright": "1.65.1"
+  }
+}

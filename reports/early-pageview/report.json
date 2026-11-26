@@ -1,0 +1,5438 @@
+{
+  "tool": {
+    "name": "@autumntrace/consent-lab",
+    "version": "0.1.0"
+  },
+  "label": "defect: early-pageview",
+  "startedAt": "2026-11-26T05:39:08.735Z",
+  "finishedAt": "2026-11-26T05:39:52.194Z",
+  "target": {
+    "baseURL": "http://localhost:3251",
+    "startPath": "/",
+    "adapter": "Fernway Supply banner and preferences dialog",
+    "navigation": {
+      "link": "Products",
+      "path": "/products"
+    }
+  },
+  "policy": {
+    "source": "C:\\Users\\Administrator\\Desktop\\Work\\consent-lab\\fixtures\\shop\\consent-lab\\policy.json",
+    "sha256": "32b9e5cbd4cf1ea36ba25905dacac3e00ff6f7dee4e01f77855dfa77608d6e20",
+    "unclassified": "report",
+    "categoryUnderTest": "analytics",
+    "optional": [
+      "analytics",
+      "marketing"
+    ]
+  },
+  "observation": {
+    "windowMs": 1000,
+    "collector": "http://127.0.0.1:4318",
+    "surfaces": [
+      "Network requests made by any page or worker in the browser context (attempted, whether or not they completed)",
+      "Events received by the collector, when one is configured (received)",
+      "Cookies in the browser context, for every domain, at the end of each step",
+      "localStorage keys of the page origin at the end of each step, matched against the policy"
+    ]
+  },
+  "results": [
+    {
+      "browser": "chromium",
+      "browserVersion": "159.0.8154.6",
+      "scenario": "fresh-visit",
+      "title": "Fresh visit",
+      "question": "Before the visitor chooses anything, does any optional tracker run?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:09.490Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 33,
+          "actionEnd": 87,
+          "windowEnd": 1102,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 36,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 44,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 44,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 44,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 45,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 45,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 45,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 45,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 89,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 91,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 91,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 91,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 91,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 103,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 103,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 104,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 104,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 11,
+              "t": 88,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+89 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+88 ms #11 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+89 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "159.0.8154.6",
+      "scenario": "reject",
+      "title": "Reject",
+      "question": "After \"reject\", does anything optional start on this page, the next one, or a reload?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:10.602Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 23,
+          "actionEnd": 71,
+          "windowEnd": 1079,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 24,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 74,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 75,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 75,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 76,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 76,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 82,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 83,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 83,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 83,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 12,
+              "t": 72,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "reject all",
+          "action": {
+            "kind": "reject-all"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 1083,
+          "actionEnd": 1224,
+          "windowEnd": 2236,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "navigate in the app",
+          "action": {
+            "kind": "navigate"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 2238,
+          "actionEnd": 2277,
+          "windowEnd": 3278,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 2259,
+              "url": "http://localhost:3251/products?_rsc=el7BCi-tv65C08OI",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2274,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2279,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2288,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2289,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 3,
+          "label": "reload",
+          "action": {
+            "kind": "reload"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 3280,
+          "actionEnd": 3297,
+          "windowEnd": 4304,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 3281,
+              "url": "http://localhost:3251/products",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3290,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3290,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3290,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3291,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3291,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3291,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3291,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3291,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3300,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3300,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 3305,
+              "url": "http://localhost:3251/?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3305,
+              "url": "http://localhost:3251/about?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3305,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3305,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3309,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/about?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3315,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3315,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 13,
+              "t": 3299,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/products",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+74 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+72 ms #12 /collect/analytics page_view page=/"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"reload\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+3300 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"reload\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+3299 ms #13 /collect/analytics page_view page=/products"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+74 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "159.0.8154.6",
+      "scenario": "accept",
+      "title": "Accept",
+      "question": "Does analytics start only after it is accepted, and keep working across a client-side navigation?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:14.913Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 21,
+          "actionEnd": 67,
+          "windowEnd": 1068,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 22,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 69,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 84,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 84,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 85,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 85,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 14,
+              "t": 67,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1072,
+          "actionEnd": 1180,
+          "windowEnd": 2195,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1179,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1194,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 15,
+              "t": 1194,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "navigate in the app",
+          "action": {
+            "kind": "navigate"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-start"
+          },
+          "actionStart": 2198,
+          "actionEnd": 2230,
+          "windowEnd": 3242,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 2213,
+              "url": "http://localhost:3251/products?_rsc=el7BCi-tv65C08OI",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2227,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2232,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2232,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 2244,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2244,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 16,
+              "t": 2232,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/products",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+69 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+67 ms #14 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+69 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "159.0.8154.6",
+      "scenario": "revoke",
+      "title": "Revoke",
+      "question": "After analytics is revoked, do its requests stop and its cookies and storage go?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:18.161Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 21,
+          "actionEnd": 67,
+          "windowEnd": 1081,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 22,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 70,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 80,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 80,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 80,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 80,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 85,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 85,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 86,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 86,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 17,
+              "t": 68,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1085,
+          "actionEnd": 1182,
+          "windowEnd": 2197,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1181,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1196,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 18,
+              "t": 1196,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "revoke analytics",
+          "action": {
+            "kind": "revoke",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 2199,
+          "actionEnd": 2281,
+          "windowEnd": 3286,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+70 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+68 ms #17 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+70 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "159.0.8154.6",
+      "scenario": "client-side-navigation",
+      "title": "Revoke, then navigate",
+      "question": "After revoking analytics, does a client-side navigation bring the tracker back?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:21.453Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 23,
+          "actionEnd": 71,
+          "windowEnd": 1084,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 24,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 32,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 73,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 74,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 75,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 75,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 75,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 81,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 81,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 81,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 82,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 19,
+              "t": 72,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1086,
+          "actionEnd": 1190,
+          "windowEnd": 2205,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1189,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1203,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 20,
+              "t": 1203,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "revoke analytics",
+          "action": {
+            "kind": "revoke",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 2207,
+          "actionEnd": 2289,
+          "windowEnd": 3301,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 3,
+          "label": "navigate in the app",
+          "action": {
+            "kind": "navigate"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 3302,
+          "actionEnd": 3341,
+          "windowEnd": 4342,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 3323,
+              "url": "http://localhost:3251/products?_rsc=el7BCi-tv65C08OI",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3339,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3343,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3355,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3355,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+73 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+72 ms #19 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+73 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "chromium",
+      "browserVersion": "159.0.8154.6",
+      "scenario": "full-reload",
+      "title": "Revoke, then reload",
+      "question": "After revoking analytics, does a full reload bring the tracker back?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:25.801Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 22,
+          "actionEnd": 68,
+          "windowEnd": 1082,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 23,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 29,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 30,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 70,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 73,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 73,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 73,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 73,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 78,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 79,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 21,
+              "t": 69,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1085,
+          "actionEnd": 1192,
+          "windowEnd": 2207,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1191,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1205,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 22,
+              "t": 1205,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "revoke analytics",
+          "action": {
+            "kind": "revoke",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 2209,
+          "actionEnd": 2290,
+          "windowEnd": 3299,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 3,
+          "label": "reload",
+          "action": {
+            "kind": "reload"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 3301,
+          "actionEnd": 3316,
+          "windowEnd": 4330,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 3302,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3309,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3310,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3318,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "ping",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 3322,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3322,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3322,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3322,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3327,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3327,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3328,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3328,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 23,
+              "t": 3318,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+70 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+69 ms #21 /collect/analytics page_view page=/"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"reload\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+3318 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"reload\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+3318 ms #23 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+70 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "159.0",
+      "scenario": "fresh-visit",
+      "title": "Fresh visit",
+      "question": "Before the visitor chooses anything, does any optional tracker run?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:30.470Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 320,
+          "actionEnd": 640,
+          "windowEnd": 1646,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 327,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 405,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 406,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 406,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 406,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 407,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 407,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 408,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 647,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 647,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 647,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 648,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 648,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 689,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 689,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 690,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 691,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 24,
+              "t": 649,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+647 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+649 ms #24 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+647 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "159.0",
+      "scenario": "reject",
+      "title": "Reject",
+      "question": "After \"reject\", does anything optional start on this page, the next one, or a reload?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:32.136Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 138,
+          "actionEnd": 183,
+          "windowEnd": 1187,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 139,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 154,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 154,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 154,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 154,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 154,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 155,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 155,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 186,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 187,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 188,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 188,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 188,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 194,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 195,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 195,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 196,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 25,
+              "t": 187,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "reject all",
+          "action": {
+            "kind": "reject-all"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 1190,
+          "actionEnd": 1294,
+          "windowEnd": 2305,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "navigate in the app",
+          "action": {
+            "kind": "navigate"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 2309,
+          "actionEnd": 2327,
+          "windowEnd": 3329,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 2321,
+              "url": "http://localhost:3251/products?_rsc=el7BCi-tv65C08OI",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2325,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2331,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2333,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2334,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2334,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 3,
+          "label": "reload",
+          "action": {
+            "kind": "reload"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 3331,
+          "actionEnd": 3371,
+          "windowEnd": 4380,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 3337,
+              "url": "http://localhost:3251/products",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3349,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3350,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3350,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3350,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3351,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3351,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3351,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3374,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3374,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 3374,
+              "url": "http://localhost:3251/?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3375,
+              "url": "http://localhost:3251/about?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3375,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3376,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3382,
+              "url": "http://localhost:3251/products/map-case?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3383,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=RfWpbQVJ6hAD6NNn",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3383,
+              "url": "http://localhost:3251/?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3384,
+              "url": "http://localhost:3251/about?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3386,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3389,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3390,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3390,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 26,
+              "t": 3376,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/products",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+186 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+187 ms #25 /collect/analytics page_view page=/"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"reload\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+3374 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"reload\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+3376 ms #26 /collect/analytics page_view page=/products"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+186 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "159.0",
+      "scenario": "accept",
+      "title": "Accept",
+      "question": "Does analytics start only after it is accepted, and keep working across a client-side navigation?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:36.533Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 141,
+          "actionEnd": 186,
+          "windowEnd": 1192,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 143,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 157,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 157,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 157,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 157,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 158,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 158,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 158,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 187,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 191,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 191,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 191,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 191,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 198,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 198,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 198,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 199,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 27,
+              "t": 190,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1195,
+          "actionEnd": 1269,
+          "windowEnd": 2282,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1267,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1270,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 28,
+              "t": 1270,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "navigate in the app",
+          "action": {
+            "kind": "navigate"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-start"
+          },
+          "actionStart": 2284,
+          "actionEnd": 2306,
+          "windowEnd": 3306,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 2299,
+              "url": "http://localhost:3251/products?_rsc=el7BCi-tv65C08OI",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2303,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2309,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2310,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2310,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 2312,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 2312,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 29,
+              "t": 2312,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/products",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+187 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+190 ms #27 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+187 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "159.0",
+      "scenario": "revoke",
+      "title": "Revoke",
+      "question": "After analytics is revoked, do its requests stop and its cookies and storage go?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:39.854Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 141,
+          "actionEnd": 189,
+          "windowEnd": 1198,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 142,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 160,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 160,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 160,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 160,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 192,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 194,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 194,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 194,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 195,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 201,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 202,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 202,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 204,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 30,
+              "t": 193,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1202,
+          "actionEnd": 1285,
+          "windowEnd": 2298,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1283,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1286,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 31,
+              "t": 1287,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "revoke analytics",
+          "action": {
+            "kind": "revoke",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 2301,
+          "actionEnd": 2351,
+          "windowEnd": 3363,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+192 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+193 ms #30 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+192 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "159.0",
+      "scenario": "client-side-navigation",
+      "title": "Revoke, then navigate",
+      "question": "After revoking analytics, does a client-side navigation bring the tracker back?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:43.234Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 142,
+          "actionEnd": 191,
+          "windowEnd": 1192,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 144,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 160,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 161,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 161,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 162,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 162,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 162,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 162,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 193,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 196,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 196,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 197,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 197,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 203,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 204,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 205,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 205,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 32,
+              "t": 195,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1197,
+          "actionEnd": 1274,
+          "windowEnd": 2276,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1272,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1275,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 33,
+              "t": 1276,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "revoke analytics",
+          "action": {
+            "kind": "revoke",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 2278,
+          "actionEnd": 2328,
+          "windowEnd": 3330,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 3,
+          "label": "navigate in the app",
+          "action": {
+            "kind": "navigate"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 3332,
+          "actionEnd": 3350,
+          "windowEnd": 4357,
+          "url": "http://localhost:3251/products",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 3343,
+              "url": "http://localhost:3251/products?_rsc=el7BCi-tv65C08OI",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3347,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3354,
+              "url": "http://localhost:3251/_next/static/chunks/0o70vux_csodr.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3354,
+              "url": "http://127.0.0.1:4318/widget/stock.json",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "unclassified",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3355,
+              "url": "http://localhost:3251/products/map-case?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3355,
+              "url": "http://localhost:3251/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+193 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+195 ms #32 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+193 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+        ]
+      }
+    },
+    {
+      "browser": "firefox",
+      "browserVersion": "159.0",
+      "scenario": "full-reload",
+      "title": "Revoke, then reload",
+      "question": "After revoking analytics, does a full reload bring the tracker back?",
+      "status": "fail",
+      "startedAt": "2026-11-26T05:39:47.609Z",
+      "initialState": {
+        "cookies": 0
+      },
+      "steps": [
+        {
+          "index": 0,
+          "label": "visit",
+          "action": {
+            "kind": "visit"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 142,
+          "actionEnd": 188,
+          "windowEnd": 1199,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 143,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 158,
+              "url": "http://localhost:3251/_next/static/chunks/1wu0o6xocaxym.css",
+              "method": "GET",
+              "resourceType": "stylesheet",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 158,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 159,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 160,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 191,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 193,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 193,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 194,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 195,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 197,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 200,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 200,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 201,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 34,
+              "t": 192,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 1,
+          "label": "accept analytics",
+          "action": {
+            "kind": "accept",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "marketing"
+            ],
+            "required": [
+              "analytics"
+            ],
+            "from": "action-end"
+          },
+          "actionStart": 1204,
+          "actionEnd": 1278,
+          "windowEnd": 2294,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [
+            {
+              "t": 1277,
+              "url": "http://127.0.0.1:4318/pulse.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 1280,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 35,
+              "t": 1281,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            },
+            {
+              "name": "_pulse_id",
+              "domain": "localhost",
+              "category": "analytics"
+            },
+            {
+              "name": "_pulse_session",
+              "domain": "localhost",
+              "category": "analytics"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            },
+            {
+              "key": "pulse:queue",
+              "category": "analytics"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 2,
+          "label": "revoke analytics",
+          "action": {
+            "kind": "revoke",
+            "category": "analytics"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-end"
+          },
+          "actionStart": 2297,
+          "actionEnd": 2350,
+          "windowEnd": 3358,
+          "url": "http://localhost:3251/",
+          "documentLoads": 0,
+          "requests": [],
+          "receipts": [],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        },
+        {
+          "index": 3,
+          "label": "reload",
+          "action": {
+            "kind": "reload"
+          },
+          "expect": {
+            "forbidden": [
+              "analytics",
+              "marketing"
+            ],
+            "required": [],
+            "from": "action-start"
+          },
+          "actionStart": 3361,
+          "actionEnd": 3398,
+          "windowEnd": 4412,
+          "url": "http://localhost:3251/",
+          "documentLoads": 1,
+          "requests": [
+            {
+              "t": 3366,
+              "url": "http://localhost:3251/",
+              "method": "GET",
+              "resourceType": "document",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3378,
+              "url": "http://localhost:3251/_next/static/chunks/29g1rh8eobcgb.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3378,
+              "url": "http://localhost:3251/_next/static/chunks/1zeqzgvp0znb1.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3378,
+              "url": "http://localhost:3251/_next/static/chunks/18ntjnpv_pq9s.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3378,
+              "url": "http://localhost:3251/_next/static/chunks/35irbthpq_gu3.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3379,
+              "url": "http://localhost:3251/_next/static/chunks/turbopack-2u1d16houkiyo.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3379,
+              "url": "http://localhost:3251/_next/static/chunks/1ae6qhe9ppyiz.js",
+              "method": "GET",
+              "resourceType": "script",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3399,
+              "url": "http://127.0.0.1:4318/collect/analytics",
+              "method": "POST",
+              "resourceType": "beacon",
+              "category": "analytics",
+              "outcome": "completed",
+              "status": 204
+            },
+            {
+              "t": 3403,
+              "url": "http://localhost:3251/products?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3403,
+              "url": "http://localhost:3251/about?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3403,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3403,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=5CB68i4pnAekjehf",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3409,
+              "url": "http://localhost:3251/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3409,
+              "url": "http://localhost:3251/products?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3410,
+              "url": "http://localhost:3251/about?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            },
+            {
+              "t": 3410,
+              "url": "http://localhost:3251/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3",
+              "method": "GET",
+              "resourceType": "fetch",
+              "category": "first-party",
+              "outcome": "completed",
+              "status": 200
+            }
+          ],
+          "receipts": [
+            {
+              "seq": 36,
+              "t": 3400,
+              "path": "/collect/analytics",
+              "event": "page_view",
+              "page": "/",
+              "category": "analytics"
+            }
+          ],
+          "cookies": [
+            {
+              "name": "consent",
+              "domain": "localhost",
+              "category": "necessary"
+            }
+          ],
+          "storage": [
+            {
+              "key": "shop:last-visit",
+              "category": "necessary"
+            }
+          ],
+          "otherStorageKeys": 0
+        }
+      ],
+      "violations": [
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+191 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 0,
+          "stepLabel": "visit",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"visit\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+192 ms #34 /collect/analytics page_view page=/"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "request-attempted",
+          "category": "analytics",
+          "expected": "No analytics requests from the start of \"reload\", through the 1000 ms observation window.",
+          "observed": "1 analytics request attempted.",
+          "evidence": [
+            "+3399 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+          ]
+        },
+        {
+          "step": 3,
+          "stepLabel": "reload",
+          "rule": "event-received",
+          "category": "analytics",
+          "expected": "The collector receives no analytics events from the start of \"reload\".",
+          "observed": "1 analytics event received.",
+          "evidence": [
+            "+3400 ms #36 /collect/analytics page_view page=/"
+          ]
+        }
+      ],
+      "firstViolation": {
+        "step": 0,
+        "stepLabel": "visit",
+        "rule": "request-attempted",
+        "category": "analytics",
+        "expected": "No analytics requests from the start of \"visit\", through the 1000 ms observation window.",
+        "observed": "1 analytics request attempted.",
+        "evidence": [
+          "+191 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)"
+        ]
+      }
+    }
+  ],
+  "unclassified": [
+    {
+      "url": "http://127.0.0.1:4318/widget/stock.json",
+      "firstSeen": {
+        "browser": "chromium",
+        "scenario": "reject",
+        "step": 2
+      }
+    }
+  ],
+  "summary": {
+    "runs": 12,
+    "passed": 0,
+    "failed": 12,
+    "errors": 0,
+    "violations": 32,
+    "unclassified": 1
+  },
+  "verdict": "fail"
+}

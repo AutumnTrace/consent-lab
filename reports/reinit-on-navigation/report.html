@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>consent-lab: fail · defect: reinit-on-navigation</title>
+<style>
+  :root { --ink:#1d232b; --muted:#5f6b78; --line:#dde2e8; --bad:#fbe9e7; --badline:#c8473b; --ok:#2e7d4f; }
+  body { margin:0; font:14px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif; color:var(--ink); background:#f5f6f8; }
+  main { max-width:1100px; margin:0 auto; padding:28px 24px 60px; }
+  h1 { font-size:22px; margin:0 0 4px; } h2 { font-size:17px; margin:28px 0 10px; } h3 { font-size:15px; margin:18px 0 8px; }
+  h4 { font-size:14px; margin:0 0 4px; } h5 { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin:12px 0 4px; }
+  .verdict { display:inline-block; padding:2px 10px; border-radius:6px; font-weight:700; color:#fff; background:var(--ok); }
+  .verdict.fail, .verdict.error { background:var(--badline); }
+  .muted, .meta { color:var(--muted); } .meta { font-size:13px; margin:2px 0 8px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin:12px 0; }
+  table { border-collapse:collapse; width:100%; font-size:13px; background:#fff; }
+  th, td { text-align:left; padding:4px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  td.t { font-variant-numeric:tabular-nums; white-space:nowrap; } td.url { font-family:ui-monospace,Consolas,monospace; word-break:break-all; }
+  td.pass a { color:var(--ok); } td.fail a, td.error a { color:var(--badline); font-weight:600; }
+  tr.bad td { background:var(--bad); } .item.bad { background:var(--bad); outline:1px solid var(--badline); }
+  .chip { display:inline-block; font-size:11px; padding:0 6px; border-radius:9px; background:#e7eefc; color:#2a4d9b; }
+  .chip.quiet { background:#eceff2; color:#56606b; } .chip.warn { background:#fff1d6; color:#7a5200; }
+  .item { display:inline-block; padding:1px 6px; border-radius:5px; margin:2px 4px 2px 0; font-family:ui-monospace,Consolas,monospace; font-size:12px; }
+  .result { background:#fff; border:1px solid var(--line); border-radius:10px; margin:10px 0; padding:0 16px; }
+  .result > summary { cursor:pointer; padding:12px 0; font-weight:600; }
+  .status { display:inline-block; min-width:44px; text-align:center; font-size:12px; border-radius:5px; color:#fff; background:var(--ok); padding:1px 6px; margin-right:6px; }
+  .status.fail, .status.error { background:var(--badline); }
+  .question { font-style:italic; }
+  .violation { border-left:4px solid var(--badline); background:var(--bad); padding:8px 14px; border-radius:6px; margin:8px 0; }
+  .violation dl { display:grid; grid-template-columns:90px 1fr; margin:6px 0; } .violation dt { font-weight:600; } .violation dd { margin:0; }
+  pre { background:#fff; border:1px solid var(--line); border-radius:6px; padding:8px 10px; overflow-x:auto; font-size:12px; margin:6px 0; }
+  .step { border-top:1px solid var(--line); padding:12px 0; } .step.first h4 { color:var(--badline); }
+  .n { display:inline-block; width:20px; height:20px; border-radius:50%; background:var(--ink); color:#fff; text-align:center; font-size:12px; line-height:20px; margin-right:4px; }
+  .flag { font-size:11px; background:var(--badline); color:#fff; border-radius:5px; padding:1px 6px; margin-left:6px; }
+  .state { margin:6px 0; }
+  details.own > summary { cursor:pointer; color:var(--muted); font-size:13px; margin:4px 0; }
+  ul.surfaces { margin:4px 0 0 18px; padding:0; }
+  footer { margin-top:32px; font-size:13px; color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>consent-lab report <span class="verdict fail">fail</span></h1>
+  <p class="meta">defect: reinit-on-navigation · http://localhost:3253 · 2026-11-26T05:40:36.771Z · @autumntrace/consent-lab 0.1.0</p>
+
+  <div class="card">
+    <p><strong>8</strong> of 12 runs passed · <strong>16</strong> violation(s) · <strong>1</strong> unclassified request URL(s) · 0 error(s)</p>
+    <p>Category under test: <span class="chip cat">analytics</span> · optional categories: <span class="chip cat">analytics</span> <span class="chip cat">marketing</span> · policy <code>policy.json</code> (sha256 32b9e5cbd4cf) · unclassified requests: report</p>
+    <p>Adapter: Fernway Supply banner and preferences dialog · start page / · client-side navigation via link "Products" to /products · chromium 159.0.8154.6, firefox 159.0</p>
+    <p><strong>Observed after each action for 1000 ms.</strong> Surfaces:</p>
+    <ul class="surfaces"><li>Network requests made by any page or worker in the browser context (attempted, whether or not they completed)</li><li>Events received by the collector, when one is configured (received)</li><li>Cookies in the browser context, for every domain, at the end of each step</li><li>localStorage keys of the page origin at the end of each step, matched against the policy</li></ul>
+  </div>
+
+  <h2>Scenarios</h2>
+  <table>
+    <thead><tr><th>scenario</th><th>chromium</th><th>firefox</th></tr></thead>
+    <tbody><tr><td>fresh-visit</td><td class="pass"><a href="#chromium-fresh-visit">pass</a></td><td class="pass"><a href="#firefox-fresh-visit">pass</a></td></tr><tr><td>reject</td><td class="fail"><a href="#chromium-reject">fail at step 3: request-attempted</a></td><td class="fail"><a href="#firefox-reject">fail at step 3: request-attempted</a></td></tr><tr><td>accept</td><td class="pass"><a href="#chromium-accept">pass</a></td><td class="pass"><a href="#firefox-accept">pass</a></td></tr><tr><td>revoke</td><td class="pass"><a href="#chromium-revoke">pass</a></td><td class="pass"><a href="#firefox-revoke">pass</a></td></tr><tr><td>client-side-navigation</td><td class="fail"><a href="#chromium-client-side-navigation">fail at step 4: request-attempted</a></td><td class="fail"><a href="#firefox-client-side-navigation">fail at step 4: request-attempted</a></td></tr><tr><td>full-reload</td><td class="pass"><a href="#chromium-full-reload">pass</a></td><td class="pass"><a href="#firefox-full-reload">pass</a></td></tr></tbody>
+  </table>
+
+  <h2>Runs</h2>
+  <details class="result" id="chromium-fresh-visit"><summary><span class="status pass">pass</span> Fresh visit <span class="muted">· chromium 159.0.8154.6</span></summary><p class="question">Before the visitor chooses anything, does any optional tracker run?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +31–84 ms, watched until +1088 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+34</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+42</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+90</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+90</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+90</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+90</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+102</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+102</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+103</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+103</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="chromium-reject" open><summary><span class="status fail">fail</span> Reject <span class="muted">· chromium 159.0.8154.6</span></summary><p class="question">After &quot;reject&quot;, does anything optional start on this page, the next one, or a reload?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>First violating action</h3><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>request-attempted</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics requests from the start of &quot;navigate in the app&quot;, through the 1000 ms observation window.</dd><dt>Observed</dt><dd>2 analytics requests attempted.</dd></dl>
+    <pre>+2261 ms GET http://127.0.0.1:4318/pulse.js (script, completed 200)
++2264 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)</pre>
+  </div><details><summary>3 more violation(s) in this run</summary><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>event-received</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>The collector receives no analytics events from the start of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>1 analytics event received.</dd></dl>
+    <pre>+2263 ms #47 /collect/analytics page_view page=/products</pre>
+  </div><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>cookie-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics cookies at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>_pulse_id, _pulse_session still set.</dd></dl>
+    <pre>cookie _pulse_id on localhost
+cookie _pulse_session on localhost</pre>
+  </div><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>storage-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics localStorage keys at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>pulse:queue still stored.</dd></dl>
+    <pre>localStorage pulse:queue</pre>
+  </div></details><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +22–68 ms, watched until +1070 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+23</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+75</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+75</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+75</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+75</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+82</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+82</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+82</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+83</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> reject all </h4>
+    <p class="meta">action +1073–1209 ms, watched until +2217 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step first" id="s-2">
+    <h4><span class="n">3</span> navigate in the app <span class="flag">first violation</span></h4>
+    <p class="meta">action +2220–2259 ms, watched until +3260 ms · forbidden: analytics, marketing · window from start of action · page /products</p>
+    <h5>Requests attempted (7)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2261</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr><tr class="bad">
+        <td class="t">+2261</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="bad">
+        <td class="t">+2264</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table><details class="own"><summary>4 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2243</td><td>GET</td><td class="url">/products?_rsc=el7BCi-tv65C08OI</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2257</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2274</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2274</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class="bad"><td class="t">+2263</td><td>47</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/products</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item bad">_pulse_id <span class="chip cat">analytics</span></span> <span class="item bad">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item bad">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-3">
+    <h4><span class="n">4</span> reload </h4>
+    <p class="meta">action +3263–3280 ms, watched until +4281 ms · forbidden: analytics, marketing · window from start of action · page /products</p>
+    <h5>Requests attempted (22)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3283</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr></tbody></table><details class="own"><summary>21 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3264</td><td>GET</td><td class="url">/products</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3274</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3274</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3274</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3274</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3275</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3275</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3275</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3275</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3290</td><td>GET</td><td class="url">/?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3290</td><td>GET</td><td class="url">/about?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3290</td><td>GET</td><td class="url">/products/trail-flask?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3290</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3294</td><td>GET</td><td class="url">/products/map-case?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3295</td><td>GET</td><td class="url">/products/camp-mug?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3295</td><td>GET</td><td class="url">/?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3295</td><td>GET</td><td class="url">/about?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3299</td><td>GET</td><td class="url">/products/trail-flask?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3299</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3300</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3300</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="chromium-accept"><summary><span class="status pass">pass</span> Accept <span class="muted">· chromium 159.0.8154.6</span></summary><p class="question">Does analytics start only after it is accepted, and keep working across a client-side navigation?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +22–72 ms, watched until +1082 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+23</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+85</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+85</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+85</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+86</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+91</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+91</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+92</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+92</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1086–1187 ms, watched until +2190 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1186</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1200</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1200</td><td>48</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> navigate in the app </h4>
+    <p class="meta">action +2192–2220 ms, watched until +3233 ms · forbidden: marketing · required: analytics · window from start of action · page /products</p>
+    <h5>Requests attempted (6)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2222</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2222</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table><details class="own"><summary>4 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2203</td><td>GET</td><td class="url">/products?_rsc=el7BCi-tv65C08OI</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2218</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2235</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2235</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+2222</td><td>49</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/products</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section></details><details class="result" id="chromium-revoke"><summary><span class="status pass">pass</span> Revoke <span class="muted">· chromium 159.0.8154.6</span></summary><p class="question">After analytics is revoked, do its requests stop and its cookies and storage go?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +22–69 ms, watched until +1078 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+23</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+30</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+79</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+79</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+80</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+80</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+84</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+85</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+85</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+85</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1081–1181 ms, watched until +2183 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1180</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1195</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1195</td><td>50</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> revoke analytics </h4>
+    <p class="meta">action +2186–2263 ms, watched until +3276 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="chromium-client-side-navigation" open><summary><span class="status fail">fail</span> Revoke, then navigate <span class="muted">· chromium 159.0.8154.6</span></summary><p class="question">After revoking analytics, does a client-side navigation bring the tracker back?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>First violating action</h3><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>request-attempted</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics requests from the start of &quot;navigate in the app&quot;, through the 1000 ms observation window.</dd><dt>Observed</dt><dd>1 analytics request attempted.</dd></dl>
+    <pre>+3318 ms POST http://127.0.0.1:4318/collect/analytics (ping, completed 204)</pre>
+  </div><details><summary>3 more violation(s) in this run</summary><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>event-received</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>The collector receives no analytics events from the start of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>1 analytics event received.</dd></dl>
+    <pre>+3317 ms #52 /collect/analytics page_view page=/products</pre>
+  </div><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>cookie-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics cookies at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>_pulse_id, _pulse_session still set.</dd></dl>
+    <pre>cookie _pulse_id on localhost
+cookie _pulse_session on localhost</pre>
+  </div><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>storage-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics localStorage keys at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>pulse:queue still stored.</dd></dl>
+    <pre>localStorage pulse:queue</pre>
+  </div></details><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +22–70 ms, watched until +1072 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+23</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+31</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+80</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+80</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+80</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+80</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+86</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+86</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+86</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+87</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1075–1182 ms, watched until +2196 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1181</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1195</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1195</td><td>51</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> revoke analytics </h4>
+    <p class="meta">action +2198–2280 ms, watched until +3287 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step first" id="s-3">
+    <h4><span class="n">4</span> navigate in the app <span class="flag">first violation</span></h4>
+    <p class="meta">action +3289–3315 ms, watched until +4329 ms · forbidden: analytics, marketing · window from start of action · page /products</p>
+    <h5>Requests attempted (6)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3318</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr><tr class="bad">
+        <td class="t">+3318</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table><details class="own"><summary>4 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3297</td><td>GET</td><td class="url">/products?_rsc=el7BCi-tv65C08OI</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3313</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3329</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3329</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class="bad"><td class="t">+3317</td><td>52</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/products</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item bad">_pulse_id <span class="chip cat">analytics</span></span> <span class="item bad">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item bad">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section></details><details class="result" id="chromium-full-reload"><summary><span class="status pass">pass</span> Revoke, then reload <span class="muted">· chromium 159.0.8154.6</span></summary><p class="question">After revoking analytics, does a full reload bring the tracker back?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +22–67 ms, watched until +1082 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+23</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+29</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+78</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+78</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+78</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+78</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+84</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+84</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+84</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+84</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1086–1196 ms, watched until +2202 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1195</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1210</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>ping</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1210</td><td>53</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> revoke analytics </h4>
+    <p class="meta">action +2204–2295 ms, watched until +3310 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-3">
+    <h4><span class="n">4</span> reload </h4>
+    <p class="meta">action +3312–3327 ms, watched until +4336 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3313</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3320</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3321</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3321</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3321</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3321</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3321</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3321</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3343</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3343</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3343</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3343</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3348</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3348</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3348</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3349</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="firefox-fresh-visit"><summary><span class="status pass">pass</span> Fresh visit <span class="muted">· firefox 159.0</span></summary><p class="question">Before the visitor chooses anything, does any optional tracker run?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +322–640 ms, watched until +1640 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+332</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+537</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+537</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+538</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+538</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+539</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+539</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+539</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+646</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+646</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+647</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+647</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+655</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+674</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+674</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+676</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="firefox-reject" open><summary><span class="status fail">fail</span> Reject <span class="muted">· firefox 159.0</span></summary><p class="question">After &quot;reject&quot;, does anything optional start on this page, the next one, or a reload?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>First violating action</h3><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>request-attempted</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics requests from the start of &quot;navigate in the app&quot;, through the 1000 ms observation window.</dd><dt>Observed</dt><dd>2 analytics requests attempted.</dd></dl>
+    <pre>+2341 ms GET http://127.0.0.1:4318/pulse.js (script, completed 200)
++2345 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)</pre>
+  </div><details><summary>3 more violation(s) in this run</summary><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>event-received</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>The collector receives no analytics events from the start of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>1 analytics event received.</dd></dl>
+    <pre>+2345 ms #54 /collect/analytics page_view page=/products</pre>
+  </div><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>cookie-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics cookies at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>_pulse_id, _pulse_session still set.</dd></dl>
+    <pre>cookie _pulse_id on localhost
+cookie _pulse_session on localhost</pre>
+  </div><div class="violation">
+    <p><strong>Step 3: navigate in the app</strong> · rule <code>storage-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics localStorage keys at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>pulse:queue still stored.</dd></dl>
+    <pre>localStorage pulse:queue</pre>
+  </div></details><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +137–182 ms, watched until +1192 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+138</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+153</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+154</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+154</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+154</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+154</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+155</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+155</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+187</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+187</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+187</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+187</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+194</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> reject all </h4>
+    <p class="meta">action +1195–1297 ms, watched until +2313 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step first" id="s-2">
+    <h4><span class="n">3</span> navigate in the app <span class="flag">first violation</span></h4>
+    <p class="meta">action +2316–2335 ms, watched until +3351 ms · forbidden: analytics, marketing · window from start of action · page /products</p>
+    <h5>Requests attempted (8)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="bad">
+        <td class="t">+2341</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2342</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr><tr class="bad">
+        <td class="t">+2345</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table><details class="own"><summary>5 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2328</td><td>GET</td><td class="url">/products?_rsc=el7BCi-tv65C08OI</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2332</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2339</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2342</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2343</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class="bad"><td class="t">+2345</td><td>54</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/products</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item bad">_pulse_id <span class="chip cat">analytics</span></span> <span class="item bad">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item bad">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-3">
+    <h4><span class="n">4</span> reload </h4>
+    <p class="meta">action +3353–3391 ms, watched until +4406 ms · forbidden: analytics, marketing · window from start of action · page /products</p>
+    <h5>Requests attempted (21)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3394</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr></tbody></table><details class="own"><summary>20 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3359</td><td>GET</td><td class="url">/products</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3370</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3370</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3371</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3371</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3371</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3371</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3372</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3394</td><td>GET</td><td class="url">/?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3395</td><td>GET</td><td class="url">/about?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3395</td><td>GET</td><td class="url">/products/trail-flask?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3395</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3402</td><td>GET</td><td class="url">/products/map-case?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3402</td><td>GET</td><td class="url">/products/camp-mug?_rsc=RfWpbQVJ6hAD6NNn</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3403</td><td>GET</td><td class="url">/?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3403</td><td>GET</td><td class="url">/about?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3408</td><td>GET</td><td class="url">/products/trail-flask?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3409</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3410</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3410</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="firefox-accept"><summary><span class="status pass">pass</span> Accept <span class="muted">· firefox 159.0</span></summary><p class="question">Does analytics start only after it is accepted, and keep working across a client-side navigation?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +140–186 ms, watched until +1188 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+142</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+157</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+157</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+158</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+159</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+159</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+159</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+159</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+190</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+190</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+190</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+191</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+197</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+198</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+199</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+200</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1192–1268 ms, watched until +2280 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1266</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1270</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1269</td><td>55</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> navigate in the app </h4>
+    <p class="meta">action +2283–2301 ms, watched until +3317 ms · forbidden: marketing · required: analytics · window from start of action · page /products</p>
+    <h5>Requests attempted (7)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2305</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2307</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table><details class="own"><summary>5 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+2295</td><td>GET</td><td class="url">/products?_rsc=el7BCi-tv65C08OI</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2298</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2305</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2308</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+2308</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+2307</td><td>56</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/products</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section></details><details class="result" id="firefox-revoke"><summary><span class="status pass">pass</span> Revoke <span class="muted">· firefox 159.0</span></summary><p class="question">After analytics is revoked, do its requests stop and its cookies and storage go?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +143–190 ms, watched until +1204 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+144</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+160</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+160</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+160</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+202</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+203</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+204</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+204</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1208–1285 ms, watched until +2286 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1283</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1287</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1287</td><td>57</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> revoke analytics </h4>
+    <p class="meta">action +2289–2339 ms, watched until +3345 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details><details class="result" id="firefox-client-side-navigation" open><summary><span class="status fail">fail</span> Revoke, then navigate <span class="muted">· firefox 159.0</span></summary><p class="question">After revoking analytics, does a client-side navigation bring the tracker back?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>First violating action</h3><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>request-attempted</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics requests from the start of &quot;navigate in the app&quot;, through the 1000 ms observation window.</dd><dt>Observed</dt><dd>1 analytics request attempted.</dd></dl>
+    <pre>+3362 ms POST http://127.0.0.1:4318/collect/analytics (beacon, completed 204)</pre>
+  </div><details><summary>3 more violation(s) in this run</summary><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>event-received</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>The collector receives no analytics events from the start of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>1 analytics event received.</dd></dl>
+    <pre>+3362 ms #59 /collect/analytics page_view page=/products</pre>
+  </div><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>cookie-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics cookies at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>_pulse_id, _pulse_session still set.</dd></dl>
+    <pre>cookie _pulse_id on localhost
+cookie _pulse_session on localhost</pre>
+  </div><div class="violation">
+    <p><strong>Step 4: navigate in the app</strong> · rule <code>storage-present</code> · <span class="chip cat">analytics</span></p>
+    <dl><dt>Expected</dt><dd>No analytics localStorage keys at the end of &quot;navigate in the app&quot;.</dd><dt>Observed</dt><dd>pulse:queue still stored.</dd></dl>
+    <pre>localStorage pulse:queue</pre>
+  </div></details><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +142–191 ms, watched until +1196 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+143</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+161</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+162</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+162</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+162</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+195</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+201</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+203</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+203</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+204</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1200–1273 ms, watched until +2279 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1272</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1275</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1274</td><td>58</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> revoke analytics </h4>
+    <p class="meta">action +2282–2331 ms, watched until +3333 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step first" id="s-3">
+    <h4><span class="n">4</span> navigate in the app <span class="flag">first violation</span></h4>
+    <p class="meta">action +3335–3356 ms, watched until +4371 ms · forbidden: analytics, marketing · window from start of action · page /products</p>
+    <h5>Requests attempted (7)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3361</td><td>GET</td><td class="url">http://127.0.0.1:4318/widget/stock.json</td>
+        <td>fetch</td><td><span class="chip warn">unclassified</span></td><td>completed 200</td></tr><tr class="bad">
+        <td class="t">+3362</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table><details class="own"><summary>5 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3350</td><td>GET</td><td class="url">/products?_rsc=el7BCi-tv65C08OI</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3354</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3361</td><td>GET</td><td class="url">/_next/static/chunks/0o70vux_csodr.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3362</td><td>GET</td><td class="url">/products/map-case?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3363</td><td>GET</td><td class="url">/products/camp-mug?_rsc=l9EjB63pqfrb5tUJ</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class="bad"><td class="t">+3362</td><td>59</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/products</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item bad">_pulse_id <span class="chip cat">analytics</span></span> <span class="item bad">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item bad">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section></details><details class="result" id="firefox-full-reload"><summary><span class="status pass">pass</span> Revoke, then reload <span class="muted">· firefox 159.0</span></summary><p class="question">After revoking analytics, does a full reload bring the tracker back?</p><p class="meta">Started in a new browser context holding 0 cookies.</p><h3>Timeline</h3><section class="step " id="s-0">
+    <h4><span class="n">1</span> visit </h4>
+    <p class="meta">action +140–185 ms, watched until +1186 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (16)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>16 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+142</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+155</td><td>GET</td><td class="url">/_next/static/chunks/1wu0o6xocaxym.css</td>
+        <td>stylesheet</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+155</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+156</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+156</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+156</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+156</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+157</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+189</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+189</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+190</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+190</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+196</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+197</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+197</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+198</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="muted">none</span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-1">
+    <h4><span class="n">2</span> accept analytics </h4>
+    <p class="meta">action +1190–1263 ms, watched until +2271 ms · forbidden: marketing · required: analytics · window from end of action · page /</p>
+    <h5>Requests attempted (2)</h5>
+    <table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+1261</td><td>GET</td><td class="url">http://127.0.0.1:4318/pulse.js</td>
+        <td>script</td><td><span class="chip cat">analytics</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+1265</td><td>POST</td><td class="url">http://127.0.0.1:4318/collect/analytics</td>
+        <td>beacon</td><td><span class="chip cat">analytics</span></td><td>completed 204</td></tr></tbody></table>
+    <h5>Events received by the collector (1)</h5>
+    <table><thead><tr><th>t (ms)</th><th>#</th><th>endpoint</th><th>event</th><th>page</th><th>category</th></tr></thead><tbody><tr class=""><td class="t">+1264</td><td>60</td><td class="url">/collect/analytics</td>
+              <td>page_view</td><td>/</td><td><span class="chip cat">analytics</span></td></tr></tbody></table>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span> <span class="item ">_pulse_id <span class="chip cat">analytics</span></span> <span class="item ">_pulse_session <span class="chip cat">analytics</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span> <span class="item ">pulse:queue <span class="chip cat">analytics</span></span></p>
+  </section><section class="step " id="s-2">
+    <h4><span class="n">3</span> revoke analytics </h4>
+    <p class="meta">action +2273–2326 ms, watched until +3332 ms · forbidden: analytics, marketing · window from end of action · page /</p>
+    <h5>Requests attempted (0)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section><section class="step " id="s-3">
+    <h4><span class="n">4</span> reload </h4>
+    <p class="meta">action +3335–3374 ms, watched until +4383 ms · forbidden: analytics, marketing · window from start of action · page /</p>
+    <h5>Requests attempted (15)</h5>
+    <p class="muted">None to other origins or listed in the policy.</p><details class="own"><summary>15 first-party request(s) to http://localhost:3253</summary><table><thead><tr><th>t (ms)</th><th>method</th><th>url</th><th>type</th><th>category</th><th>outcome</th></tr></thead><tbody><tr class="">
+        <td class="t">+3340</td><td>GET</td><td class="url">/</td>
+        <td>document</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3351</td><td>GET</td><td class="url">/_next/static/chunks/29g1rh8eobcgb.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3351</td><td>GET</td><td class="url">/_next/static/chunks/1zeqzgvp0znb1.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3351</td><td>GET</td><td class="url">/_next/static/chunks/18ntjnpv_pq9s.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3352</td><td>GET</td><td class="url">/_next/static/chunks/35irbthpq_gu3.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3352</td><td>GET</td><td class="url">/_next/static/chunks/turbopack-2u1d16houkiyo.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3352</td><td>GET</td><td class="url">/_next/static/chunks/1ae6qhe9ppyiz.js</td>
+        <td>script</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3375</td><td>GET</td><td class="url">/products?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3376</td><td>GET</td><td class="url">/about?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3376</td><td>GET</td><td class="url">/products/trail-flask?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3376</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=5CB68i4pnAekjehf</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3382</td><td>GET</td><td class="url">/products/trail-flask?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3382</td><td>GET</td><td class="url">/products?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3383</td><td>GET</td><td class="url">/about?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr><tr class="">
+        <td class="t">+3383</td><td>GET</td><td class="url">/products/wool-beanie?_rsc=tXyZJ52UQVBCVsD3</td>
+        <td>fetch</td><td><span class="chip quiet">first-party</span></td><td>completed 200</td></tr></tbody></table></details>
+    <h5>Events received by the collector (0)</h5>
+    <p class="muted">None.</p>
+    <p class="state"><strong>Cookies at end of step:</strong> <span class="item ">consent <span class="chip quiet">necessary</span></span></p>
+    <p class="state"><strong>localStorage at end of step:</strong> <span class="item ">shop:last-visit <span class="chip quiet">necessary</span></span></p>
+  </section></details>
+
+  <h2>Unclassified requests</h2>
+  <p class="meta">Requests to another origin that no category in the policy lists. With <code>unclassified: "report"</code> they are reported but do not fail the run.</p>
+         <table><thead><tr><th>url</th><th>first seen</th></tr></thead><tbody><tr><td class="url">http://127.0.0.1:4318/widget/stock.json</td><td>chromium · reject · step 3</td></tr></tbody></table>
+
+  <footer>
+    This report records what the browsers above did on http://localhost:3253 during the listed observation windows, on the
+    listed surfaces only. It does not see server-side processing, other storage (IndexedDB, cache), or requests after the window
+    closes, and it is not a legal assessment of compliance.
+  </footer>
+</main>
+</body>
+</html>

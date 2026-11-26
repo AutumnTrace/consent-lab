@@ -51,7 +51,7 @@ export interface Expectation {
   required: string[];
   // Where the forbidden window starts. Navigations count from the start of the action; consent
   // changes count from when the adapter returns, so an event fired by the click itself is not
-  // held against the revocation.
+  // held against the revocation. Required activity always counts from the start of the action.
   from: 'action-start' | 'action-end';
 }
 

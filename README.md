@@ -70,6 +70,7 @@ The *navigate* step clicks a real in-app link and fails as a harness error if a 
 - **Window start:**
   - Navigations (visit, navigate, reload) count requests from the moment the action starts.
   - Consent changes (accept, revoke, reject all) count from the moment the adapter returns, so an event fired by the Save click itself is not held against the revocation.
+  - The positive control after *accept* counts from the start of the action: a tracker may load and send its first event while the adapter is still waiting for the dialog to close.
 - **Attempted vs received:** a request the browser started counts as attempted even if it failed or was blocked. A receipt is what reached the collector. The report shows both side by side.
   - Chromium reports `sendBeacon` requests as `ping`; Firefox reports them as `beacon`.
   - Receipt times come from the collector's clock on the same machine, so a receipt can read a millisecond before the browser's request event.
@@ -115,7 +116,8 @@ The release checks run the real collector, a production build of the shop and th
 | A request no category lists | Listed as unclassified with `"report"`; fails `reject` at *navigate* with `unclassified-request` under `"fail"`. | [release: unclassified](tests/release.test.ts#L94) |
 | An event fired by the Save click itself | Not counted against the revocation; one fired after the adapter returns is. | [unit](packages/harness/test/evaluate.test.ts#L41) |
 | A tracker that never runs after accept | `expected-activity-missing`, so revocation checks can't pass vacuously. | [unit](packages/harness/test/evaluate.test.ts#L49) |
-| Several violations in one run | Sorted by step, and the report leads with the first. | [unit](packages/harness/test/evaluate.test.ts#L67) |
+| The tracker's first event lands before the adapter returns | Still counts for the positive control | [unit](packages/harness/test/evaluate.test.ts#L62) |
+| Several violations in one run | Sorted by step, and the report leads with the first. | [unit](packages/harness/test/evaluate.test.ts#L80) |
 | A URL containing `<script>` | Escaped. The report has no scripts and no external resources. | [unit](packages/harness/test/report.test.ts#L65) |
 
 ### The defects, and the change that fixes each
@@ -193,7 +195,7 @@ Measured on Windows 11 with a Ryzen 7 9800X3D, Node 24.21.0, Playwright 1.65.1 (
 | `cookie-after-revoke` | 12 | 6 passed, 10 violations, exit 1 | 43.4 s |
 | `reinit-on-navigation` | 12 | 8 passed, 16 violations, exit 1 | 43.4 s |
 | release test suite (`pnpm test:release`) | 6 checks, 8 harness runs | all passed | 232 s |
-| unit tests (`pnpm test`) | 18 | all passed | 0.1 s |
+| unit tests (`pnpm test`) | 19 | all passed | 0.1 s |
 
 The wall time is almost entirely observation windows. There are 19 steps × 1000 ms per browser.
 

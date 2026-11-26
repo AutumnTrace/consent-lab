@@ -62,17 +62,19 @@ export function evaluate(steps: StepRecord[], policy: Policy, windowMs: number):
       }
     }
 
+    // The positive control counts from the start of the action: a tracker may load and send its
+    // first event while the adapter is still waiting for the consent dialog to close.
     for (const category of step.expect.required) {
       // Received events when a collector is configured; attempted requests otherwise.
       const seen =
         step.receipts !== null
-          ? step.receipts.some((r) => r.category === category && r.t >= from)
-          : step.requests.some((r) => r.category === category && r.t >= from);
+          ? step.receipts.some((r) => r.category === category && r.t >= step.actionStart)
+          : step.requests.some((r) => r.category === category && r.t >= step.actionStart);
       if (!seen) {
         add(
           'expected-activity-missing',
           category,
-          `At least one ${category} ${step.receipts !== null ? 'event received' : 'request'} ${since}. Without it, the later checks would pass even if the tracker never ran.`,
+          `At least one ${category} ${step.receipts !== null ? 'event received' : 'request'} from the start of "${step.label}" through the ${windowMs} ms observation window. Without it, the later checks would pass even if the tracker never ran.`,
           `No ${category} activity.`,
           [],
         );

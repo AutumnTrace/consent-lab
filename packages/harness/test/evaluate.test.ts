@@ -59,6 +59,19 @@ describe('evaluate', () => {
     expect(evaluate([working], policy, 1000)).toEqual([]);
   });
 
+  it('counts required activity from the start of the action, before the adapter returns', () => {
+    // Pulse loaded and sent its first event while the adapter waited for the dialog to close.
+    const accept = { forbidden: ['marketing'], required: ['analytics'], from: 'action-end' as const };
+    const early = step({
+      label: 'accept analytics',
+      expect: accept,
+      actionStart: 0,
+      actionEnd: 300,
+      receipts: [{ seq: 1, t: 180, path: '/collect/analytics', event: 'page_view', page: '/', category: 'analytics' }],
+    });
+    expect(evaluate([early], policy, 1000)).toEqual([]);
+  });
+
   it('falls back to attempted requests when there is no collector', () => {
     const accept = { forbidden: [], required: ['analytics'], from: 'action-end' as const };
     expect(evaluate([step({ expect: accept, receipts: null, requests: [beacon(150)] })], policy, 1000)).toEqual([]);

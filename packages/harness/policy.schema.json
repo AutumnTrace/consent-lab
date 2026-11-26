@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/AutumnTrace/consent-lab/packages/harness/policy.schema.json",
+  "title": "consent-lab policy",
+  "description": "What each consent category may touch, as seen from the browser. A trailing * makes a prefix match.",
+  "type": "object",
+  "required": ["version", "unclassified", "categories"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "unclassified": {
+      "enum": ["report", "fail"],
+      "description": "Requests to another origin that no category lists: report them, or fail the run."
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["requests", "cookies", "storage"],
+        "properties": {
+          "description": { "type": "string" },
+          "necessary": { "type": "boolean", "description": "Necessary categories are never forbidden." },
+          "requests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "origin": { "type": "string", "description": "e.g. https://stats.example.com, or a prefix ending in *" },
+                "path": { "type": "string", "description": "e.g. /collect, or a prefix ending in *" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "cookies": { "type": "array", "items": { "type": "string" } },
+          "storage": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

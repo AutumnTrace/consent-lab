@@ -1,0 +1,43 @@
+{
+  "name": "@autumntrace/consent-lab",
+  "version": "0.1.0",
+  "description": "Executable evidence of what a page does with consent: Playwright scenarios, a policy of what each category may touch, and an HTML timeline of every request, event, cookie and storage key.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Mina Rotari",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AutumnTrace/consent-lab.git",
+    "directory": "packages/harness"
+  },
+  "bin": {
+    "consent-lab": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./policy.schema.json": "./policy.schema.json"
+  },
+  "files": [
+    "dist",
+    "policy.schema.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "playwright": "1.65.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.4",
+    "typescript": "6.0.3",
+    "vitest": "5.1.2"
+  }
+}
